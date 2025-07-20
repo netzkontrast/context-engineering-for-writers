@@ -82,7 +82,7 @@ Except for displaying the License Details and identifying us as the origin of
 the Software and Content, you have no right under these Terms and Conditions to use our
 trademarks, trade names, service marks or product names.
 
-The fully qualified name "https://github.com/parolkar/agi-hdb" and the domain names associated with it are the exclusive property of Abhishek Parolkar. No right or license is granted to use these names or domains in any manner whatsoever without the express written permission of Abhishek Parolkar. Any unauthorized use of these names or domains is strictly prohibited.
+The fully qualified name "https://github.com/parolkar/context-engineering-for-writers" and the domain names associated with it are the exclusive property of Abhishek Parolkar. No right or license is granted to use these names or domains in any manner whatsoever without the express written permission of Abhishek Parolkar. Any unauthorized use of these names or domains is strictly prohibited.
 
 ## Grant of Future License
 

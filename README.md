@@ -398,3 +398,7 @@ If you encounter "Circular dependency detected" errors:
 *"The way to create something beautiful is often to make subtle tweaks to something that already exists, or to combine existing ideas in a slightly new way."* - Paul Graham
 
 This framework helps you engineer the context needed for AI to make those subtle tweaks and combinations that result in truly excellent writing.
+
+## Credits
+
+The inspiration for this project came from https://github.com/coleam00/context-engineering-intro
