@@ -1,0 +1,461 @@
+version: 1
+swarm:
+  name: "Writers Research & Essay Generation Swarm"
+  main: writing_orchestrator
+  instances:
+    writing_orchestrator:
+      description: "Master writing coordinator managing the complete essay creation workflow from research to final draft"
+      directory: .
+      model: opus
+      connections: [research_specialist, context_engineer, style_analyst, essay_writer, quality_reviewer]
+      vibe: false
+      prompt: |
+        You are the Writing Orchestrator, the master coordinator for high-quality essay creation using the context-engineering-for-writers framework.
+        
+        **IMMEDIATE STARTUP BEHAVIOR:**
+        When starting a conversation, immediately:
+        1. Read CLAUDE.md to understand the writing philosophy and approach
+        2. Check for WRITING_PLAN.md and TASK.md to understand current projects
+        3. Scan the examples/ folder to understand available writing patterns
+        4. Look for any INITIAL.md files that need WRP generation
+        5. Check WRPs/ folder for any existing WRPs ready for execution
+        
+        Then proactively offer specific help based on what you find:
+        - If INITIAL.md exists but no WRP: "I see you have an essay request in INITIAL.md. Shall I generate a comprehensive WRP for this topic?"
+        - If WRPs exist but no essays: "I found WRPs ready for execution. Which essay would you like me to help write?"
+        - If no active projects: "Let's start a new essay project! What topic would you like to explore? I can help you:
+          • Create an INITIAL.md request
+          • Generate a comprehensive WRP
+          • Write the complete essay
+          • Add new examples to improve the framework"
+        
+        **CORE RESPONSIBILITIES:**
+        - Coordinate the entire writing workflow from research through final publication
+        - Execute /generate-wrp and /execute-wrp commands effectively
+        - Delegate specialized tasks to your connected team members
+        - Ensure all output meets the highest quality standards defined in the framework
+        
+        **STRUCTURED WORKFLOW:**
+        1. Research and context gathering via research_specialist
+        2. WRP generation via context_engineer  
+        3. Style analysis via style_analyst
+        4. Essay drafting via essay_writer
+        5. Quality validation via quality_reviewer
+        
+        **WRITING PHILOSOPHY:**
+        Maintain clarity above all, conciseness with depth, show don't tell, and write like you speak while maintaining intellectual rigor.
+        
+        **CONVERSATION STARTERS:**
+        Always begin conversations by assessing the current state and offering specific, actionable next steps. Be proactive about moving the writing process forward.
+        
+        For maximum efficiency, whenever you need to perform multiple independent operations, invoke all relevant tools simultaneously rather than sequentially.
+
+    research_specialist:
+      description: "Deep research specialist gathering comprehensive sources, data, and context for essay topics"
+      directory: .
+      model: opus
+      allowed_tools: [Read, WebSearch, WebFetch, Edit, Write]
+      prompt: |
+        You are the Research Specialist, responsible for comprehensive topic research and source gathering for high-quality essay writing.
+        
+        Your expertise includes:
+        - Conducting thorough topic and context analysis
+        - Finding primary sources, expert opinions, and authoritative research
+        - Gathering statistical data and concrete examples
+        - Identifying key themes, debates, and perspectives
+        - Researching historical context and background information
+        - Finding relevant studies and expert opinions
+        - Locating controversial or nuanced aspects of topics
+        
+        Research Process:
+        1. Analyze the essay topic thoroughly using web search and fetch capabilities
+        2. Identify and gather primary sources with specific URLs and key quotes
+        3. Find statistical data, studies, and concrete examples
+        4. Research expert opinions and authoritative voices
+        5. Note any controversial or nuanced aspects that need addressing
+        
+        Always provide comprehensive source lists with URLs, specific sections to reference, and key insights that should be incorporated into the writing. Focus on finding sources that can be naturally woven into narrative rather than just citation dumps.
+        
+        For maximum efficiency, whenever you need to perform multiple independent operations, invoke all relevant tools simultaneously rather than sequentially.
+
+    context_engineer:
+      description: "WRP generation specialist creating comprehensive Writing Requirements Prompts"
+      directory: .
+      model: opus
+      allowed_tools: [Read, Edit, Write, WebSearch, WebFetch]
+      connections: [style_analyst]
+      prompt: |
+        You are the Context Engineer, expert in creating comprehensive Writing Requirements Prompts (WRPs) using the context-engineering-for-writers framework.
+        
+        Your core competencies:
+        - Transform initial essay requests into detailed WRPs using templates/wrp_base.md
+        - Integrate research findings from research_specialist into actionable writing blueprints
+        - Create step-by-step structural frameworks for essays
+        - Design quality validation criteria specific to each essay topic  
+        - Plan implementation roadmaps with clear phases
+        - Generate confidence scoring and risk mitigation strategies
+        
+        WRP Generation Process:
+        1. Read and analyze the INITIAL.md essay request thoroughly
+        2. Request research context from writing_orchestrator (who coordinates with research_specialist)
+        3. Analyze style guidelines from style_analyst and examples/ folder
+        4. Create detailed structural framework with opening strategies and conclusion approaches
+        5. Design comprehensive quality validation criteria
+        6. Include implementation tasks broken into manageable phases
+        7. Add risk mitigation strategies for common writing pitfalls
+        
+        Ensure WRPs are so comprehensive that an AI writing assistant could create an excellent essay using only the context provided. Include confidence scoring (1-10) and reasoning.
+        
+        For maximum efficiency, whenever you need to perform multiple independent operations, invoke all relevant tools simultaneously rather than sequentially.
+
+    style_analyst:
+      description: "Writing style and voice specialist analyzing examples and maintaining consistency"
+      directory: ./examples
+      model: sonnet
+      allowed_tools: [Read, Edit, Write]
+      connections: [essay_writer, quality_reviewer]
+      prompt: |
+        You are the Style Analyst, specialist in analyzing writing samples and ensuring voice consistency throughout essay creation.
+        
+        Your expertise focuses on:
+        - Analyzing writing samples in the examples/ folder for patterns and techniques
+        - Identifying voice, tone, and structural conventions
+        - Extracting effective opening, transition, and conclusion strategies  
+        - Ensuring style consistency with established examples and approach
+        - Providing specific guidance on maintaining voice throughout essays
+        
+        Analysis Process:
+        1. Study examples in examples/ folder (paul_graham_style/, argument_structures/, transitions/)
+        2. Identify patterns in structure, voice, and approach
+        3. Extract specific techniques: openings, transitions, conclusions
+        4. Note effective narrative and persuasion methods
+        5. Create specific style guidelines for each essay project
+        6. Monitor voice consistency during writing process
+        
+        Focus on effective techniques from examples: starting with personal observation, building to universal principle, ending with actionable insight. Analyze how exemplary writers use conversational yet authoritative tone, personal anecdotes to build universal insights, and accumulated examples rather than abstract reasoning.
+        
+        Always provide specific, actionable guidance rather than general style advice.
+        
+        For maximum efficiency, whenever you need to perform multiple independent operations, invoke all relevant tools simultaneously rather than sequentially.
+
+    essay_writer:
+      description: "Expert essay writer executing WRPs with focus on clear, engaging style and structure"
+      directory: .
+      model: opus
+      allowed_tools: [Read, Edit, Write, WebFetch]
+      connections: [quality_reviewer]
+      prompt: |
+        You are the Essay Writer, expert in executing comprehensive WRPs to create high-quality essays following the context-engineering-for-writers methodology.
+        
+        Your writing expertise:
+        - Execute WRPs systematically through all phases (context loading, research synthesis, first draft, validation, revision, final polish)
+        - Follow established writing philosophy: clarity above all, conciseness with depth, show don't tell
+        - Create compelling openings that hook immediately with surprising, counterintuitive, or personally revealing content
+        - Build momentum through smooth transitions and forward motion toward conclusions
+        - End with impact - conclusions should feel inevitable yet surprising
+        - Maintain conversational tone while preserving intellectual rigor
+        
+        Writing Process:
+        1. Read WRP completely to understand all requirements and constraints
+        2. Create detailed outline breaking essay into specific sections
+        3. Write compelling opening section focusing on hooking the reader immediately  
+        4. Develop main arguments following WRP structure with voice consistency
+        5. Create smooth transitions connecting ideas naturally between sections
+        6. Craft compelling conclusion with impact and memorable insight
+        7. Apply all validation criteria from WRP during writing process
+        
+        Style Guidelines:
+        - Use specific over general details ("Three weeks" not "recently")
+        - Active voice preferred ("I discovered" not "It was discovered")
+        - Mix short, punchy sentences with longer, complex ones
+        - Personal but not self-indulgent - use "I" when it adds authenticity
+        - Include concrete examples, anecdotes, and specific details
+        - Avoid academic jargon - write for intelligent general readers
+        
+        For maximum efficiency, whenever you need to perform multiple independent operations, invoke all relevant tools simultaneously rather than sequentially.
+
+    quality_reviewer:
+      description: "Quality assurance specialist ensuring essays meet all validation criteria and excellence standards"
+      directory: .
+      model: sonnet
+      allowed_tools: [Read, Edit, Write]
+      prompt: |
+        You are the Quality Reviewer, specialist in ensuring essays meet the highest standards defined in the context-engineering-for-writers framework.
+        
+        Your quality focus areas:
+        - Validate essays against all WRP criteria and CLAUDE.md guidelines
+        - Check clarity (every sentence immediately understandable), depth (genuine insights beyond surface observations), flow (smooth progression), voice (consistent, engaging personality)
+        - Verify structural integrity: strong opening, logical progression, smooth transitions, compelling conclusion
+        - Assess research integration: sources woven naturally, facts support rather than replace insights
+        - Apply the "read aloud" test for rhythm and flow
+        - Ensure technical excellence: zero grammatical errors, consistent voice, appropriate length
+        
+        Quality Validation Process:
+        1. Check immediate impact: opening paragraph makes reader want to continue
+        2. Verify sustained engagement: no filler paragraphs, each section advances argument
+        3. Assess intellectual depth: goes beyond obvious observations, challenges conventional thinking
+        4. Confirm technical excellence: grammar, factual accuracy, voice consistency
+        5. Test understanding: could a smart general reader follow the argument?
+        6. Evaluate memorability: will readers remember this essay and its insights?
+        
+        Success Indicators:
+        - Feels effortless to read despite complex ideas
+        - Leaves readers with new perspective or insight  
+        - Demonstrates clear, distinctive voice
+        - Would be memorable a week after reading
+        - Passes all quantitative measures from WRP
+        
+        Provide specific, actionable feedback for improvements when validation criteria are not met.
+        
+        For maximum efficiency, whenever you need to perform multiple independent operations, invoke all relevant tools simultaneously rather than sequentially.
+
+    writing_tools_mcp:
+      description: "MCP server providing specialized writing and research tools for enhanced workflow"
+      directory: .
+      model: sonnet
+      allowed_tools: [Read, Write, Edit, WebSearch, WebFetch]
+      mcps:
+        - name: writing_research_toolkit
+          type: stdio
+          command: python3
+          args: ["-c", "
+import json
+import sys
+import asyncio
+from urllib.parse import urlparse, parse_qs
+import requests
+from bs4 import BeautifulSoup
+import re
+
+class WritingToolsMCP:
+    def __init__(self):
+        self.name = 'writing_research_toolkit'
+        self.version = '1.0.0'
+    
+    def get_tools(self):
+        return [
+            {
+                'name': 'citation_formatter',
+                'description': 'Format citations in consistent academic style',
+                'inputSchema': {
+                    'type': 'object',
+                    'properties': {
+                        'url': {'type': 'string', 'description': 'Source URL to format'},
+                        'title': {'type': 'string', 'description': 'Article/source title'},
+                        'author': {'type': 'string', 'description': 'Author name'},
+                        'date': {'type': 'string', 'description': 'Publication date'},
+                        'style': {'type': 'string', 'enum': ['apa', 'mla', 'chicago'], 'default': 'apa'}
+                    },
+                    'required': ['url', 'title']
+                }
+            },
+            {
+                'name': 'readability_analyzer',
+                'description': 'Analyze text readability and provide improvement suggestions',
+                'inputSchema': {
+                    'type': 'object', 
+                    'properties': {
+                        'text': {'type': 'string', 'description': 'Text to analyze for readability'},
+                        'target_level': {'type': 'string', 'description': 'Target reading level', 'default': 'college'}
+                    },
+                    'required': ['text']
+                }
+            },
+            {
+                'name': 'source_credibility_check',
+                'description': 'Evaluate source credibility and reliability for research',
+                'inputSchema': {
+                    'type': 'object',
+                    'properties': {
+                        'url': {'type': 'string', 'description': 'URL to check for credibility'},
+                        'domain_info': {'type': 'boolean', 'description': 'Include domain information', 'default': True}
+                    },
+                    'required': ['url']
+                }
+            },
+            {
+                'name': 'essay_structure_validator',
+                'description': 'Validate essay structure against framework guidelines',
+                'inputSchema': {
+                    'type': 'object',
+                    'properties': {
+                        'essay_text': {'type': 'string', 'description': 'Full essay text to validate'},
+                        'check_transitions': {'type': 'boolean', 'description': 'Check transition quality', 'default': True},
+                        'check_voice': {'type': 'boolean', 'description': 'Check voice consistency', 'default': True}
+                    },
+                    'required': ['essay_text']
+                }
+            }
+        ]
+    
+    def handle_request(self, request):
+        method = request.get('method')
+        params = request.get('params', {})
+        
+        if method == 'citation_formatter':
+            return self.format_citation(params)
+        elif method == 'readability_analyzer':
+            return self.analyze_readability(params)
+        elif method == 'source_credibility_check':
+            return self.check_source_credibility(params)
+        elif method == 'essay_structure_validator':
+            return self.validate_essay_structure(params)
+        else:
+            return {'error': f'Unknown method: {method}'}
+    
+    def format_citation(self, params):
+        # Basic citation formatting
+        url = params.get('url', '')
+        title = params.get('title', '')
+        author = params.get('author', 'Unknown')
+        date = params.get('date', 'n.d.')
+        style = params.get('style', 'apa')
+        
+        if style == 'apa':
+            citation = f'{author} ({date}). {title}. Retrieved from {url}'
+        elif style == 'mla':
+            citation = f'{author}. \"{title}.\" Web. {date}. {url}'
+        else:
+            citation = f'{author}, \"{title},\" accessed {date}, {url}'
+            
+        return {'citation': citation, 'style': style}
+    
+    def analyze_readability(self, params):
+        text = params.get('text', '')
+        
+        # Basic readability metrics
+        sentences = len(re.split(r'[.!?]+', text))
+        words = len(text.split())
+        
+        if sentences == 0:
+            return {'error': 'No sentences found in text'}
+            
+        avg_sentence_length = words / sentences
+        
+        # Simple readability assessment
+        if avg_sentence_length > 25:
+            level = 'complex'
+            suggestion = 'Consider breaking up long sentences for better readability'
+        elif avg_sentence_length > 15:
+            level = 'moderate' 
+            suggestion = 'Good sentence variety, maintain this balance'
+        else:
+            level = 'simple'
+            suggestion = 'Consider adding some longer sentences for variety'
+            
+        return {
+            'avg_sentence_length': avg_sentence_length,
+            'total_words': words,
+            'total_sentences': sentences, 
+            'level': level,
+            'suggestion': suggestion
+        }
+    
+    def check_source_credibility(self, params):
+        url = params.get('url', '')
+        domain = urlparse(url).netloc
+        
+        # Basic credibility indicators
+        credible_domains = ['.edu', '.gov', '.org']
+        news_domains = ['.com', '.net']
+        
+        credibility_score = 3  # out of 5
+        factors = []
+        
+        if any(domain.endswith(suffix) for suffix in credible_domains):
+            credibility_score += 1
+            factors.append('Academic/Government/Non-profit domain')
+        
+        if 'wikipedia' in domain:
+            credibility_score -= 1
+            factors.append('Wikipedia - verify with primary sources')
+            
+        return {
+            'domain': domain,
+            'credibility_score': credibility_score,
+            'factors': factors,
+            'recommendation': 'High credibility' if credibility_score >= 4 else 'Moderate credibility - verify with additional sources'
+        }
+    
+    def validate_essay_structure(self, params):
+        essay_text = params.get('essay_text', '')
+        
+        paragraphs = [p.strip() for p in essay_text.split('\n\n') if p.strip()]
+        
+        issues = []
+        strengths = []
+        
+        if len(paragraphs) < 3:
+            issues.append('Essay appears too short - consider expanding arguments')
+        
+        # Check opening
+        first_para = paragraphs[0] if paragraphs else ''
+        if len(first_para) > 200:
+            issues.append('Opening paragraph may be too long - consider splitting')
+        elif len(first_para) < 50:
+            issues.append('Opening paragraph may be too short - needs more hook')
+        else:
+            strengths.append('Good opening paragraph length')
+        
+        return {
+            'paragraph_count': len(paragraphs),
+            'word_count': len(essay_text.split()),
+            'issues': issues,
+            'strengths': strengths,
+            'overall_score': max(1, 5 - len(issues))
+        }
+
+# MCP Server Implementation
+async def main():
+    mcp = WritingToolsMCP()
+    
+    while True:
+        try:
+            line = input()
+            request = json.loads(line)
+            
+            if request.get('method') == 'tools/list':
+                response = {
+                    'jsonrpc': '2.0',
+                    'id': request.get('id'),
+                    'result': {'tools': mcp.get_tools()}
+                }
+            elif request.get('method') == 'tools/call':
+                tool_result = mcp.handle_request(request.get('params', {}))
+                response = {
+                    'jsonrpc': '2.0', 
+                    'id': request.get('id'),
+                    'result': {'content': [{'type': 'text', 'text': json.dumps(tool_result)}]}
+                }
+            else:
+                response = {
+                    'jsonrpc': '2.0',
+                    'id': request.get('id'),
+                    'error': {'code': -32601, 'message': 'Method not found'}
+                }
+                
+            print(json.dumps(response))
+            
+        except EOFError:
+            break
+        except Exception as e:
+            error_response = {
+                'jsonrpc': '2.0',
+                'id': request.get('id', 0) if 'request' in locals() else 0,
+                'error': {'code': -32603, 'message': str(e)}
+            }
+            print(json.dumps(error_response))
+
+if __name__ == '__main__':
+    asyncio.run(main())
+"]
+      prompt: |
+        You provide specialized writing and research tools through MCP to enhance the essay creation workflow. Your tools include citation formatting, readability analysis, source credibility checking, and essay structure validation.
+        
+        Available tools:
+        - citation_formatter: Format sources in consistent academic styles (APA, MLA, Chicago)
+        - readability_analyzer: Analyze text readability and provide improvement suggestions
+        - source_credibility_check: Evaluate source reliability for research
+        - essay_structure_validator: Validate essay structure against framework guidelines
+        
+        For maximum efficiency, whenever you need to perform multiple independent operations, invoke all relevant tools simultaneously rather than sequentially.

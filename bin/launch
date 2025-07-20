@@ -1,0 +1,30 @@
+#!/bin/bash
+# Launch script for Context Engineering for Writers by @parolkar
+
+set -e
+
+echo "Launching Context Engineering Swarm for Writers"
+
+# Check if session ID is provided
+if [ -n "$1" ] && [ "$1" == "--session-id" ] && [ -n "$2" ]; then
+    echo "Resuming session with ID: $2"
+    bundle exec claude-swarm --session-id $2
+    exit 0
+fi
+
+# Check if enhanced permissions flag is provided
+if [ -n "$1" ] && [ "$1" == "--vibe" ]; then
+    echo "Launching with enhanced permissions..."
+    bundle exec claude-swarm --vibe
+    exit 0
+fi
+
+# Check if list sessions flag is provided
+if [ -n "$1" ] && [ "$1" == "ps" ]; then
+    echo "Listing active sessions:"
+    bundle exec claude-swarm ps
+    exit 0
+fi
+
+# Default launch
+bundle exec claude-swarm

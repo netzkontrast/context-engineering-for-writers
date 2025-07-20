@@ -1,0 +1,17 @@
+{
+  "allowedCommands": [
+    "generate-wrp",
+    "execute-wrp"
+  ],
+  "allowedDirectories": [
+    ".",
+    "./WRPs",
+    "./examples",
+    "./WRPs/templates"
+  ],
+  "allowedFileExtensions": [
+    ".md",
+    ".txt"
+  ],
+  "description": "Context Engineering for Writers - Framework for creating high-quality essays with AI assistance"
+}

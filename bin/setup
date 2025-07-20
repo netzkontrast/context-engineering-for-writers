@@ -1,0 +1,61 @@
+#!/bin/bash
+# Setup script for AGI-HDB: AI-Guided Intelligence for HDB Buying in Singapore
+
+set -e
+
+echo "Setting up AGI-HDB environment..."
+
+# Check if Ruby is installed
+if ! command -v ruby >/dev/null 2>&1; then
+    echo "Ruby is not installed. Please install Ruby 3.2.0 or higher."
+    exit 1
+fi
+
+# Check Ruby version
+RUBY_VERSION=$(ruby -v | awk '{print $2}')
+RUBY_MAJOR=$(echo $RUBY_VERSION | cut -d'.' -f1)
+RUBY_MINOR=$(echo $RUBY_VERSION | cut -d'.' -f2)
+
+if [ $RUBY_MAJOR -lt 3 ] || ([ $RUBY_MAJOR -eq 3 ] && [ $RUBY_MINOR -lt 2 ]); then
+    echo "Ruby version $RUBY_VERSION is installed, but AGI-HDB requires Ruby 3.2.0 or higher."
+    exit 1
+fi
+
+echo "✅ Ruby $RUBY_VERSION is installed"
+
+# Check if Claude CLI is installed
+if ! command -v claude >/dev/null 2>&1; then
+    echo "Claude CLI is not installed. Installing now..."
+    npm install -g @anthropic-ai/claude-code
+else
+    echo "✅ Claude CLI is already installed"
+fi
+
+# Install dependencies
+echo "Installing dependencies..."
+bundle install
+
+# Verify configuration file
+if [ -f "claude-swarm.yml" ]; then
+    echo "✅ Configuration file (claude-swarm.yml) found"
+else
+    echo "❌ Configuration file (claude-swarm.yml) not found!"
+    exit 1
+fi
+
+# Create initial empty files for property tracking if they don't exist
+if [ ! -f "property-shortlist.md" ]; then
+    echo "# Property Shortlist" > property-shortlist.md
+    echo "Created property-shortlist.md file"
+fi
+
+if [ ! -f "property-buying-notes.md" ]; then
+    echo "# Property Buying Notes" > property-buying-notes.md
+    echo "Created property-buying-notes.md file"
+fi
+
+# Create sessions directory if it doesn't exist
+mkdir -p ~/.claude-swarm/sessions
+
+echo "✅ AGI-HDB setup completed successfully!"
+echo "You can now run 'bin/launch' to start the Property Search Team"
