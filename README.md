@@ -1,8 +1,7 @@
 # Context Engineering for Writers
 
-A comprehensive framework for engineering context to help AI writing assistants create high-quality, concise essays with the depth and clarity of masters like Paul Graham.
+A comprehensive framework for context engineering to help AI incrementally create high-quality, concise essays with the depth and clarity. 
 
-> **Context Engineering for writing is 10x better than prompt engineering and 100x better than vibe writing.**
 
 ## 🚀 Quick Start
 
