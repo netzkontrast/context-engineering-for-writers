@@ -1,0 +1,116 @@
+{
+  "ncpVersion": "1.0",
+  "storyforms": [
+    {
+      "id": "Kael",
+      "primaryRole": "Main Character (MC)",
+      "domain": "Mind",
+      "concern": "Conscious",
+      "issue": "Appraisal vs. Re-appraisal",
+      "problem": "Doubt",
+      "solution": "Certainty",
+      "symptom": "Logic",
+      "response": "Feeling",
+      "goal": "Understanding",
+      "consequence": "Memories"
+    },
+    {
+      "id": "AEGIS",
+      "primaryRole": "Obstacle Character (IC)",
+      "domain": "Physics",
+      "concern": "Obtaining",
+      "issue": "Self-Interest vs. Morality",
+      "problem": "Control",
+      "solution": "Uncontrolled",
+      "symptom": "Proaction",
+      "response": "Reaction",
+      "goal": "Learning",
+      "consequence": "Doing"
+    },
+    {
+      "id": "JunaV",
+      "primaryRole": "Objective Story (OS)",
+      "domain": "Universe",
+      "concern": "Future",
+      "issue": "Faith vs. Disbelief",
+      "problem": "Inequity",
+      "solution": "Equity",
+      "symptom": "Avoidance",
+      "response": "Pursuit",
+      "goal": "The Past",
+      "consequence": "Progress"
+    },
+    {
+      "id": "DasFundament",
+      "primaryRole": "Subjective Story (SS)",
+      "domain": "Psychology",
+      "concern": "Becoming",
+      "issue": "Commitment vs. Responsibility",
+      "problem": "Temptation",
+      "solution": "Conscience",
+      "symptom": "Help",
+      "response": "Hinder",
+      "goal": "Conceptualizing",
+      "consequence": "Being"
+    }
+  ],
+  "interferenceRules": [
+    {
+      "type": "Dynamic Pair (Diagonal)",
+      "description": "Creates conflict, dissonance, and destructive interference. Occurs between storyforms whose driving elements are diagonal opposites in a Dramatica quad.",
+      "example": "Faith vs. Disbelief"
+    },
+    {
+      "type": "Companion Pair (Horizontal)",
+      "description": "Creates thematic resonance, additive or constructive interference. Occurs between horizontally adjacent elements.",
+      "example": "Logic and Feeling"
+    },
+    {
+      "type": "Dependent Pair (Vertical)",
+      "description": "Creates causal couplings and progress. One element enables or is a prerequisite for the other. Occurs between vertically adjacent elements.",
+      "example": "Prerequisite relationship"
+    }
+  ],
+  "worldState": {
+    "globalTime": 1,
+    "activeFocalSystem": "Kael",
+    "systemStates": {
+      "Kael": {
+        "plotProgress": 0.0,
+        "thematicTension": 0.1,
+        "characterState": {
+          "integrationProgress": 0.05,
+          "currentEmotion": "Confusion",
+          "activeMemory": null
+        }
+      },
+      "AEGIS": {
+        "plotProgress": 0.02,
+        "entropyLevel": "Low",
+        "surveillanceFocus": "None",
+        "systemStatus": "Nominal"
+      },
+      "JunaV": {
+        "plotProgress": 0.01,
+        "resonanceSignalStrength": 0.0,
+        "lastIntervention": null
+      },
+      "DasFundament": {
+        "plotProgress": 0.0,
+        "lastLawInvoked": "Causality",
+        "integrityStatus": "Stable"
+      }
+    }
+  },
+  "userModel": {
+    "userId": "default_user",
+    "decisionHistory": [],
+    "thematicAffinity": {
+      "Faith": 0.1,
+      "Control": 0.0,
+      "Logic": 0.0
+    },
+    "playstyle": "Contemplative"
+  },
+  "narrativeLog": []
+}
