@@ -17,6 +17,10 @@
     *   The non-focal systems' states should change based on the thematic resonance or dissonance (interference) of the events. For example, a logical action by Kael might increase AEGIS's `plotProgress` but also increase its `entropyLevel` due to a clash with JunaV's influence.
 4.  **Update Numerical Values:** Modify variables like `plotProgress`, `thematicTension`, `integrationProgress`, `resonanceSignalStrength`, and `entropyLevel`. The changes should be incremental and logical (e.g., progress should generally increase, tension can rise or fall).
 5.  **Update Descriptive Values:** Change string-based states like `currentEmotion`, `activeMemory`, `surveillanceFocus`, etc., to reflect the new narrative reality.
+6.  **Update Entity Grid:**
+    *   Parse the `narrative_text` to identify the grammatical roles of the key entities (Kael, AEGIS, JunaV).
+    *   Update the `worldState.entities` object with their new roles (Subject, Object, Other, or Absent).
+    *   Adjust the `salience` score for each entity based on its prominence in the text. The most prominent entity should have the highest salience.
 
 **Crucial Instructions:**
 *   **Be precise and computational.**

@@ -100,6 +100,11 @@
         "lastLawInvoked": "Causality",
         "integrityStatus": "Stable"
       }
+    },
+    "entities": {
+      "Kael": { "role": "Subject", "salience": 0.9 },
+      "AEGIS": { "role": "Other", "salience": 0.3 },
+      "JunaV": { "role": "Absent", "salience": 0.1 }
     }
   },
   "userModel": {
