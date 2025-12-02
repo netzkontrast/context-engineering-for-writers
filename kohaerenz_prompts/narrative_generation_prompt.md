@@ -13,6 +13,12 @@
     *   If AEGIS's vector is "paranoid surveillance," the focal character might feel a chill, notice flickering lights, or hear a pattern in static that isn't there.
     *   If JunaV's vector is "broadcasting a faith-based alternative," the character might experience a moment of unexpected peace, a fleeting image of something impossible, or a sudden, unprompted thought that contradicts their logic.
 3.  **Advance the Narrative:** Choose one of the `narrativePotentials` and write a compelling narrative segment that realizes it.
+
+**Writing Style and Cohesion:**
+*   **Employ Cohesive Devices:** Consciously use a variety of cohesive devices to ensure a smooth and logical flow. Use conjunctions (`because`, `however`, `therefore`) to clarify relationships. Use reference (`it`, `that`, `this`) to link back to previous concepts. Use ellipsis and substitution to avoid repetition.
+*   **Maintain Textural Richness:** Your writing should have "texture." This is achieved by creating a web of lexical and grammatical connections that guide the reader effortlessly through the text.
+*   **Show, Don't Tell:** As always, manifest the internal and external states through sensory detail and action, not through direct exposition.
+
 4.  **Generate Choices:** Conclude the narrative segment by offering the user 2-3 dynamically generated choices. These choices should be based on the other identified `narrativePotentials` and represent meaningful branches in the story.
 
 **Output Format:**
